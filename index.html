@@ -1,0 +1,322 @@
+<html>
+<head>
+<title>jQuery thooLoader Plugin</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href='http://fonts.googleapis.com/css?family=PT+Sans' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" media="screen" href="css/main.css"/>
+<!--[if lt IE 9]>
+<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->		
+</head>
+<body>
+<h2>thooLoader</h2>
+<p>jQuery circular Loader plugin with percentage, uses HTML5 Canvas and supports custom events.</p>
+
+<div class="loadcontainer" id="load2">
+	<div class="msg" id="msg2"></div>
+</div>
+
+<p class="well">
+	Try manually trigger methods:<br/>
+	<input type="button" value="init" id="initbtn"/>
+	<input type="button" value="start" id="startbtn"/>
+	<input type="button" value="reset" id="resetbtn"/>
+	<input type="button" value="clear" id="clearbtn"/>
+</p>
+
+<div class="loadcontainer" id="load1">
+	<div class="msg" id="msg1"></div>
+</div>
+
+<p class="well">
+	Different sizes, styles and colors.<br/>
+	<input type="button" value="start" id="startbtn2"/>
+</p>
+
+<table>
+	<tr>
+		<td>
+			<div class="loadcontainer" id="load3"></div>
+			<p>stroke</p>
+		</td>
+		<td>
+			<div class="loadcontainer" id="load4"></div>
+			<p>strokefill</p>
+		</td>
+		<td>
+			<div class="loadcontainer" id="load5"></div>
+			<p>fill</p>
+		</td>
+	</tr>
+</table>
+
+
+<h3>Implementation</h3>
+
+<pre class="prewell">
+		&lt;script language="javascript" type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"&gt;&lt;/script&gt; 
+		&lt;script language="javascript" type="text/javascript" src="js/jquery.thooLoader.js"&gt;&lt;/script&gt;  
+		&lt;script language="javascript" type="text/javascript"&gt;
+			$(document).ready(function(){
+				//Appending loader canvas to DIV with id "myDiv":
+				var myLoader = $('#myDiv').thooloader();
+			});
+		&lt;/script&gt;
+</pre>
+
+<p>
+	Customize the Loader with options:
+</p>
+
+<pre class="prewell">
+	$(document).ready(function(){
+				
+		var myLoader = $('#myDiv').thooloader({
+			size:'160',			// size in px
+			color:'255,150,0',		// RGB color
+			style:'strokefill'		// style, can either be stroke, fill or strokefill
+		});
+	});
+</pre>
+
+<p>
+	Custom event callbacks:
+</p>
+
+<pre class="prewell">
+	$(document).ready(function(){
+				
+		var myLoader = $('#myDiv').thooloader({
+			size:'160',
+			color:'255,150,0',
+			style:'strokefill',
+			beforeStart:function(){
+				alert('before Start');
+			},
+			Start:function(){
+				alert('on Start');
+			},
+			loadFinished:function(){
+				alert('loader has finished');
+			},
+			Reset:function(){
+				alert('loader has been resetted');
+			},
+			Clear:function(){
+				alert('loader has been cleared');
+			}
+		});
+	});
+</pre>
+
+
+
+
+
+<!--
+<div class="loadcontainer" id="load3">
+	<div class="msg" id="msg3"></div>
+</div>
+
+<div class="loadcontainer" id="load4">
+
+</div>
+-->
+
+
+<script language="javascript" type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script> 
+<script language="javascript" type="text/javascript" src="js/jquery.thooLoader.js"></script>  
+<script language="javascript">
+	$(document).ready(function(){
+
+		var myloader2 = $('#load2').thooLoader({
+			size:'160',
+			color:'255,150,0',
+			style:'strokefill'
+		});
+
+		var myloader = $('#load1').thooLoader({
+			size:'240',
+			color:'0,150,255',
+			style:'strokefill',
+			beforeStart:function(){
+				$('#msg1').html('Loader &quot;'+ $(this).attr('id') +'&quot; initialised !').css('color','black').show('slow');
+			},
+			Start:function(){
+				$('#msg1').html('Loader &quot;'+ $(this).attr('id') +'&quot; started !').css('color','black').show('slow');
+				$('#startbtn').prop('disabled','disabled');
+			},
+			loadFinished:function(){
+				$('#msg1').html('Loader &quot;'+ $(this).attr('id') +'&quot; finished !').css('color','red').show('slow');
+				$('#startbtn').prop('disabled',false);
+			},
+			Reset:function(){
+				//alert('resetted');
+				$('#msg1').html('Loader &quot;'+ $(this).attr('id') +'&quot; resetted !').css('color','black').show();
+			},
+			Clear:function(){
+				//alert('resetted');
+				$('#msg1').html('Loader &quot;'+ $(this).attr('id') +'&quot; cleared !').show();
+			}
+		});
+
+
+		$('#initbtn').click(function(){
+			myloader.init();
+		});
+
+		$('#resetbtn').click(function(){
+			myloader.reset();
+		});
+
+		$('#startbtn').click(function(){
+			//do fancy stuff here maybe ajax request with deffereds, for the moment
+			//a timeout will do
+			var a=0,b=300;
+			setTimeout(function load(){        
+	    		a+=2;          
+	    		myloader.update(a,b);
+	    		if(a<b){
+	       			setTimeout(load, 5);
+	    		}
+			}, 5);
+
+		});
+
+		$('#clearbtn').click(function(){
+			myloader.clear();
+		});
+
+
+
+		var c=0,d=100;
+			setTimeout(function load(){        
+	    		c+=1;          
+	    		myloader2.update(c,d);
+	    		if(c<d){
+	       			setTimeout(load, 5);
+	    		}
+			}, 5);
+
+
+		var myloader3 = $('#load3').thooLoader({
+			size:'120',
+			color:'0,0,230',
+			style:'stroke'
+		});
+		var myloader4 = $('#load4').thooLoader({
+			size:'180',
+			color:'0,230,0',
+			style:'strokefill'
+		});
+		var myloader5 = $('#load5').thooLoader({
+			size:'120',
+			color:'230,0,0',
+			style:'fill',
+			Start:function(){
+				$('#startbtn2').prop('disabled','disabled');
+			},
+			loadFinished:function(){
+				$('#startbtn2').prop('disabled',false);
+			},
+		});
+
+
+		$('#startbtn2').on('click', function(){
+		var x=0, y=700, w=1000, z=1300;
+		setTimeout(function init(){        
+    		x+=2;          
+    		myloader3.update(x,y);    		
+    		if(x<y){
+       			setTimeout(init, 5);
+    		}
+		}, 5);
+
+		setTimeout(function init(){        
+    		x+=2;          
+    		myloader4.update(x,w);    		
+    		if(x<w){
+       			setTimeout(init, 5);
+    		}
+		}, 5);
+
+		setTimeout(function init(){        
+    		x+=2;          
+    		myloader5.update(x,z);    		
+    		if(x<z){
+       			setTimeout(init, 5);
+    		}
+		}, 5);
+
+		});
+/*
+
+		var myloader4 = $('#load4').thooLoader({
+			size:'150',
+			color:'255,153,0',
+			style:'strokefill',
+			loadFinished:function(){
+				$('#msg4').html('Loader 4 finished !').show('slow');
+			},
+			percentageLoad:function(){
+				alert('20 % loaded');
+			}
+		});
+
+
+/*
+
+		var a=0,x=0,b=1200,c=750,d=900,e=5000;
+
+    	setTimeout(function init(){        
+    		a+=2;          
+    		myloader.update(a,b);
+    		
+    		//myloader3.update(a,b);
+    		if(a<b){
+       			setTimeout(init, 5);
+    		}
+		}, 5);
+
+		
+
+		setTimeout(function load(){        
+    		a+=2;          
+    		
+    		myloader2.update(a,c);
+    		//myloader3.update(a,b);
+    		if(a<c){
+       			setTimeout(load, 5);
+    		}
+		}, 5);
+
+
+		setTimeout(function load(){        
+    		a+=2;          
+    		
+    		myloader3.update(a,d);
+    		//myloader3.update(a,b);
+    		if(a<d){
+       			setTimeout(load, 5);
+    		}
+		}, 5);
+
+
+		setTimeout(function load(){        
+    		x+=10;          
+    		
+    		myloader4.update(x,e);
+    		//myloader3.update(a,b);
+    		if(x<e){
+       			setTimeout(load, 5);
+    		}
+		}, 5);
+
+*/
+
+	});
+</script>
+
+</body>
+</html>
