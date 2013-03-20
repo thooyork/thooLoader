@@ -111,24 +111,23 @@
 </pre>
 
 
+<p>
+	Setting the Loader by calling the update method.<br/>With cur = current value and max = maximum value.
+</p>
 
+<pre class="prewell">
+	myLoader.update(20,60); // 33%
+	myLoader.update(30,60); // 50%
+</pre>
 
-
-<!--
-<div class="loadcontainer" id="load3">
-	<div class="msg" id="msg3"></div>
-</div>
-
-<div class="loadcontainer" id="load4">
-
-</div>
--->
+<div class="loadcontainer" id="updatemethod"></div>
 
 
 <script language="javascript" type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script> 
 <script language="javascript" type="text/javascript" src="js/jquery.thooLoader.js"></script>  
 <script language="javascript">
 	$(document).ready(function(){
+
 
 		var myloader2 = $('#load2').thooLoader({
 			size:'160',
@@ -249,71 +248,23 @@
     		}
 		}, 5);
 
-		});
-/*
 
-		var myloader4 = $('#load4').thooLoader({
-			size:'150',
-			color:'255,153,0',
-			style:'strokefill',
-			loadFinished:function(){
-				$('#msg4').html('Loader 4 finished !').show('slow');
-			},
-			percentageLoad:function(){
-				alert('20 % loaded');
-			}
 		});
 
 
-/*
 
-		var a=0,x=0,b=1200,c=750,d=900,e=5000;
+		var myloader8 = $('#updatemethod').thooLoader({
+			size:'160',
+			color:'0,150,0',
+			style:'strokefill'
+		});
 
-    	setTimeout(function init(){        
-    		a+=2;          
-    		myloader.update(a,b);
-    		
-    		//myloader3.update(a,b);
-    		if(a<b){
-       			setTimeout(init, 5);
-    		}
-		}, 5);
+		myloader8.update(20, 60);
+
 
 		
+			
 
-		setTimeout(function load(){        
-    		a+=2;          
-    		
-    		myloader2.update(a,c);
-    		//myloader3.update(a,b);
-    		if(a<c){
-       			setTimeout(load, 5);
-    		}
-		}, 5);
-
-
-		setTimeout(function load(){        
-    		a+=2;          
-    		
-    		myloader3.update(a,d);
-    		//myloader3.update(a,b);
-    		if(a<d){
-       			setTimeout(load, 5);
-    		}
-		}, 5);
-
-
-		setTimeout(function load(){        
-    		x+=10;          
-    		
-    		myloader4.update(x,e);
-    		//myloader3.update(a,b);
-    		if(x<e){
-       			setTimeout(load, 5);
-    		}
-		}, 5);
-
-*/
 
 	});
 </script>
